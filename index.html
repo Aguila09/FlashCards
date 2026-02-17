@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashCards - Plataforma de Aprendizaje Modular</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/modes.css">
+</head>
+<body data-theme="light">
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="container">
+                <h1 class="logo">📚 FlashCards</h1>
+                <nav class="main-nav">
+                    <button id="btn-home" class="nav-btn active">Inicio</button>
+                    <button id="btn-decks" class="nav-btn">Mis Mazos</button>
+                    <button id="btn-stats" class="nav-btn">Estadísticas</button>
+                    <button id="btn-settings" class="nav-btn">Configuración</button>
+                </nav>
+                <button id="theme-toggle" class="theme-toggle" title="Cambiar tema">🌙</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="container">
+                <!-- Home View -->
+                <section id="view-home" class="view active">
+                    <div class="welcome">
+                        <h2>Bienvenido a FlashCards</h2>
+                        <p>Plataforma de aprendizaje modular para dominar conceptos complejos</p>
+                        <button id="btn-create-first-deck" class="btn btn-primary btn-large">
+                            ➕ Crear mi primer mazo
+                        </button>
+                    </div>
+                    <div id="recent-decks" class="recent-decks"></div>
+                </section>
+
+                <!-- Decks View -->
+                <section id="view-decks" class="view">
+                    <div class="view-header">
+                        <h2>Mis Mazos</h2>
+                        <button id="btn-new-deck" class="btn btn-primary">➕ Nuevo Mazo</button>
+                    </div>
+                    <div id="decks-list" class="decks-grid"></div>
+                </section>
+
+                <!-- Deck Detail View -->
+                <section id="view-deck-detail" class="view">
+                    <div class="view-header">
+                        <button id="btn-back-to-decks" class="btn btn-secondary">← Volver</button>
+                        <h2 id="deck-title"></h2>
+                        <div class="deck-actions">
+                            <button id="btn-edit-deck" class="btn btn-secondary">✏️ Editar</button>
+                            <button id="btn-delete-deck" class="btn btn-danger">🗑️ Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="deck-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="deck-card-count">0</div>
+                            <div class="stat-label">Cartas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="deck-mastery">0%</div>
+                            <div class="stat-label">Dominio</div>
+                        </div>
+                    </div>
+                    <div class="study-modes">
+                        <h3>Modos de Estudio</h3>
+                        <div class="modes-grid">
+                            <button class="mode-card" data-mode="sequential">
+                                <span class="mode-icon">🔄</span>
+                                <h4>Revisión Secuencial</h4>
+                                <p>Flashcard clásica</p>
+                            </button>
+                            <button class="mode-card" data-mode="quiz">
+                                <span class="mode-icon">❓</span>
+                                <h4>Quiz Múltiple</h4>
+                                <p>Opción múltiple</p>
+                            </button>
+                            <button class="mode-card" data-mode="match">
+                                <span class="mode-icon">🔗</span>
+                                <h4>Match Cards</h4>
+                                <p>Asociación de columnas</p>
+                            </button>
+                            <button class="mode-card" data-mode="input">
+                                <span class="mode-icon">⌨️</span>
+                                <h4>Escritura</h4>
+                                <p>Input de texto</p>
+                            </button>
+                            <button class="mode-card" data-mode="memory">
+                                <span class="mode-icon">🧠</span>
+                                <h4>Memoria</h4>
+                                <p>Grid de memoria</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cards-section">
+                        <div class="section-header">
+                            <h3>Cartas del Mazo</h3>
+                            <button id="btn-new-card" class="btn btn-primary">➕ Nueva Carta</button>
+                        </div>
+                        <div id="cards-list" class="cards-list"></div>
+                    </div>
+                </section>
+
+                <!-- Study View -->
+                <section id="view-study" class="view">
+                    <div class="study-header">
+                        <button id="btn-exit-study" class="btn btn-secondary">← Salir</button>
+                        <div id="study-progress" class="study-progress"></div>
+                    </div>
+                    <div id="study-content" class="study-content"></div>
+                </section>
+
+                <!-- Statistics View -->
+                <section id="view-stats" class="view">
+                    <h2>Estadísticas</h2>
+                    <div id="stats-content" class="stats-grid"></div>
+                </section>
+
+                <!-- Settings View -->
+                <section id="view-settings" class="view">
+                    <h2>Configuración</h2>
+                    <div class="settings-section">
+                        <h3>Datos</h3>
+                        <button id="btn-export" class="btn btn-secondary">📥 Exportar Mazos (JSON)</button>
+                        <button id="btn-import" class="btn btn-secondary">📤 Importar Mazos (JSON)</button>
+                        <input type="file" id="file-import" accept=".json" style="display: none;">
+                    </div>
+                    <div class="settings-section">
+                        <h3>Sistema de Repetición Espaciada</h3>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="srs-enabled">
+                            <span>Activar SRS (Sistema Leitner)</span>
+                        </label>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Deck Creation/Editing -->
+    <div id="modal-deck" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-deck-title">Nuevo Mazo</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-deck">
+                    <div class="form-group">
+                        <label for="deck-name">Nombre del Mazo *</label>
+                        <input type="text" id="deck-name" required placeholder="Ej: Vocabulario Inglés">
+                    </div>
+                    <div class="form-group">
+                        <label for="deck-description">Descripción</label>
+                        <textarea id="deck-description" placeholder="Descripción opcional del mazo"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Card Creation/Editing -->
+    <div id="modal-card" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="modal-card-title">Nueva Carta</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-card">
+                    <div class="form-group">
+                        <label for="card-title">Título Principal *</label>
+                        <input type="text" id="card-title" required placeholder="Concepto o término clave">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-description">Descripción/Definición *</label>
+                        <textarea id="card-description" required placeholder="Cuerpo teórico principal"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Caras Adicionales</label>
+                        <div id="faces-container"></div>
+                        <button type="button" id="btn-add-face" class="btn btn-secondary btn-small">➕ Añadir Cara</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Ejemplos</label>
+                        <div id="examples-container"></div>
+                        <button type="button" id="btn-add-example" class="btn btn-secondary btn-small">➕ Añadir Ejemplo</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-image">Imagen (URL)</label>
+                        <input type="url" id="card-image" placeholder="https://...">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/modes/sequential.js"></script>
+    <script src="js/modes/quiz.js"></script>
+    <script src="js/modes/match.js"></script>
+    <script src="js/modes/input.js"></script>
+    <script src="js/modes/memory.js"></script>
+    <script src="js/srs.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
