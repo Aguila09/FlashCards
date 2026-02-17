@@ -1,0 +1,502 @@
+/* Study Modes Styles */
+
+/* Study Header */
+.study-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-md);
+}
+
+.study-progress {
+    flex: 1;
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.study-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Sequential Mode (Flashcard) */
+.flashcard-container {
+    perspective: 1000px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.flashcard {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-face {
+    position: absolute;
+    width: 100%;
+    min-height: 400px;
+    backface-visibility: hidden;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+.flashcard-front {
+    z-index: 2;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+.flashcard-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary);
+    text-align: center;
+}
+
+.flashcard-content {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.flashcard-examples {
+    width: 100%;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.flashcard-examples h4 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.flashcard-example {
+    background-color: var(--bg-tertiary);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.flashcard-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    margin: var(--spacing-md) 0;
+    border-radius: var(--radius-md);
+}
+
+.flashcard-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+}
+
+/* Quiz Mode */
+.quiz-container {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.quiz-question {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.quiz-prompt {
+    background-color: var(--bg-tertiary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.quiz-option {
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+    font-size: 1rem;
+}
+
+.quiz-option:hover:not(.correct):not(.incorrect):not(:disabled) {
+    border-color: var(--primary);
+    background-color: var(--bg-tertiary);
+}
+
+.quiz-option.correct {
+    border-color: var(--success);
+    background-color: rgba(72, 187, 120, 0.1);
+}
+
+.quiz-option.incorrect {
+    border-color: var(--danger);
+    background-color: rgba(245, 101, 101, 0.1);
+}
+
+.quiz-option:disabled {
+    cursor: not-allowed;
+}
+
+.quiz-feedback {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+}
+
+.quiz-feedback.correct {
+    background-color: rgba(72, 187, 120, 0.1);
+    color: var(--success);
+}
+
+.quiz-feedback.incorrect {
+    background-color: rgba(245, 101, 101, 0.1);
+    color: var(--danger);
+}
+
+.quiz-next {
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+/* Match Mode */
+.match-container {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.match-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.match-column h3 {
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    color: var(--primary);
+}
+
+.match-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.match-item {
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.match-item:hover:not(.matched):not(.hidden) {
+    border-color: var(--primary);
+    transform: translateX(5px);
+}
+
+.match-item.selected {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: white;
+}
+
+.match-item.matched {
+    border-color: var(--success);
+    background-color: rgba(72, 187, 120, 0.1);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.match-item.error {
+    border-color: var(--danger);
+    background-color: rgba(245, 101, 101, 0.1);
+    animation: shake 0.5s;
+}
+
+.match-item.hidden {
+    visibility: hidden;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.match-score {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Input Mode */
+.input-container {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.input-prompt {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.input-hint {
+    background-color: var(--bg-tertiary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.input-hint img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    margin-top: var(--spacing-sm);
+    border-radius: var(--radius-md);
+}
+
+.input-answer {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.input-answer input {
+    flex: 1;
+    padding: var(--spacing-md);
+    font-size: 1.1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.input-answer input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.input-answer input.correct {
+    border-color: var(--success);
+}
+
+.input-answer input.incorrect {
+    border-color: var(--danger);
+}
+
+.input-feedback {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-weight: 500;
+}
+
+.input-feedback.correct {
+    background-color: rgba(72, 187, 120, 0.1);
+    color: var(--success);
+}
+
+.input-feedback.incorrect {
+    background-color: rgba(245, 101, 101, 0.1);
+    color: var(--danger);
+}
+
+.input-next {
+    text-align: center;
+    margin-top: var(--spacing-md);
+}
+
+/* Memory Mode */
+.memory-container {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.memory-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-sm);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    background-color: var(--primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    text-align: center;
+    font-size: 0.9rem;
+    color: transparent;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.memory-card::before {
+    content: '?';
+    position: absolute;
+    font-size: 2rem;
+    color: white;
+}
+
+.memory-card:hover:not(.flipped):not(.matched) {
+    opacity: 0.8;
+}
+
+.memory-card.flipped {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.memory-card.flipped::before {
+    display: none;
+}
+
+.memory-card.matched {
+    background-color: var(--success);
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.memory-card.matched::before {
+    content: '✓';
+    display: block;
+    color: white;
+}
+
+.memory-complete {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+}
+
+.memory-complete h3 {
+    color: var(--success);
+    margin-bottom: var(--spacing-md);
+}
+
+/* SRS Difficulty Buttons */
+.srs-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+}
+
+.srs-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.srs-btn.easy {
+    background-color: var(--success);
+    color: white;
+}
+
+.srs-btn.medium {
+    background-color: var(--warning);
+    color: white;
+}
+
+.srs-btn.hard {
+    background-color: var(--danger);
+    color: white;
+}
+
+.srs-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Responsive for Study Modes */
+@media (max-width: 768px) {
+    .flashcard-face {
+        min-height: 300px;
+    }
+    
+    .flashcard-title {
+        font-size: 1.5rem;
+    }
+    
+    .flashcard-content {
+        font-size: 1rem;
+    }
+    
+    .match-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .memory-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .quiz-question {
+        font-size: 1.2rem;
+    }
+}
