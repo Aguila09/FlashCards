@@ -4,6 +4,13 @@ const UI = {
     currentCardId: null,
     currentView: 'home',
 
+    // Helper function to escape HTML
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    },
+
     init() {
         this.attachGlobalEventListeners();
         this.initTheme();
@@ -125,10 +132,11 @@ const UI = {
         }
 
         const recentDecks = decks.slice(0, 3);
+        const deckCards = await Promise.all(recentDecks.map(deck => this.renderDeckCard(deck)));
         recentDecksContainer.innerHTML = `
-            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Mazos Recientes</h3>
+            <h3 class="recent-decks-title">Mazos Recientes</h3>
             <div class="decks-grid">
-                ${await Promise.all(recentDecks.map(deck => this.renderDeckCard(deck)))}
+                ${deckCards.join('')}
             </div>
         `;
 
@@ -156,7 +164,8 @@ const UI = {
             return;
         }
 
-        container.innerHTML = `${await Promise.all(decks.map(deck => this.renderDeckCard(deck)))}`;
+        const deckCards = await Promise.all(decks.map(deck => this.renderDeckCard(deck)));
+        container.innerHTML = deckCards.join('');
 
         // Attach click listeners
         document.querySelectorAll('.deck-card').forEach(card => {
@@ -171,8 +180,8 @@ const UI = {
         const stats = await StorageService.getDeckStats(deck.id);
         return `
             <div class="deck-card" data-deck-id="${deck.id}">
-                <h3>${deck.name}</h3>
-                <p>${deck.description || 'Sin descripción'}</p>
+                <h3>${this.escapeHtml(deck.name)}</h3>
+                <p>${this.escapeHtml(deck.description || 'Sin descripción')}</p>
                 <div class="deck-card-stats">
                     <span>📊 ${stats.totalCards} cartas</span>
                     <span>✓ ${stats.masteryPercentage}% dominio</span>
@@ -226,8 +235,8 @@ const UI = {
         cardsContainer.innerHTML = cards.map(card => `
             <div class="card-item">
                 <div class="card-item-content">
-                    <h4>${card.title}</h4>
-                    <p>${card.description.substring(0, 100)}${card.description.length > 100 ? '...' : ''}</p>
+                    <h4>${this.escapeHtml(card.title)}</h4>
+                    <p>${this.escapeHtml(card.description.substring(0, 100))}${card.description.length > 100 ? '...' : ''}</p>
                 </div>
                 <div class="card-item-actions">
                     <button onclick="UI.editCard(${card.id})">✏️</button>
@@ -372,7 +381,7 @@ const UI = {
         const div = document.createElement('div');
         div.className = 'dynamic-field';
         div.innerHTML = `
-            <input type="text" placeholder="Ejemplo de uso" class="example-input" value="${value}">
+            <input type="text" placeholder="Ejemplo de uso" class="example-input" value="${this.escapeHtml(value)}">
             <button type="button" onclick="this.parentElement.remove()">✕</button>
         `;
         container.appendChild(div);

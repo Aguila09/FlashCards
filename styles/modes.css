@@ -1,5 +1,9 @@
 /* Study Modes Styles */
 
+:root {
+    --flashcard-min-height: 400px;
+}
+
 /* Study Header */
 .study-header {
     display: flex;
@@ -30,7 +34,7 @@
 .flashcard {
     position: relative;
     width: 100%;
-    min-height: 400px;
+    min-height: var(--flashcard-min-height);
     transition: transform 0.6s;
     transform-style: preserve-3d;
     cursor: pointer;
@@ -43,7 +47,7 @@
 .flashcard-face {
     position: absolute;
     width: 100%;
-    min-height: 400px;
+    min-height: var(--flashcard-min-height);
     backface-visibility: hidden;
     background-color: var(--bg-secondary);
     border: 2px solid var(--border-color);
@@ -476,8 +480,8 @@
 
 /* Responsive for Study Modes */
 @media (max-width: 768px) {
-    .flashcard-face {
-        min-height: 300px;
+    :root {
+        --flashcard-min-height: 300px;
     }
     
     .flashcard-title {

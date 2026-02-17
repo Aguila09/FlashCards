@@ -144,12 +144,15 @@ const InputMode = {
         if (isCorrect) {
             input.classList.add('correct');
             feedback.className = 'input-feedback correct';
-            feedback.innerHTML = '✓ ¡Correcto!';
+            feedback.textContent = '✓ ¡Correcto!';
             this.session.recordAnswer(true);
         } else {
             input.classList.add('incorrect');
             feedback.className = 'input-feedback incorrect';
-            feedback.innerHTML = `✗ Incorrecto<br><strong>Respuesta correcta:</strong> ${correctAnswer}`;
+            const correctSpan = document.createElement('strong');
+            correctSpan.textContent = correctAnswer;
+            feedback.innerHTML = '✗ Incorrecto<br><strong>Respuesta correcta:</strong> ';
+            feedback.appendChild(correctSpan);
             this.session.recordAnswer(false);
         }
 
